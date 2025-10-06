@@ -44,6 +44,7 @@ class StatTrie {
     void setIgnoredCharacters (const char* delim);
     void setDelimiters (const char* delim);
     void insert (string text);
+    void insertWord(const string& word);    //Helper
     bool insertFromFile (string filepath);  // Insert data from another file (no overwriting)
     bool loadFromFile (string filepath);    // Load data from another file (overwrite)
     bool contains (string words) const;
