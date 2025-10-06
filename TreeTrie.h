@@ -20,11 +20,14 @@ class StatTrie {
         int count;
         bool isEndOfWord;
 
-        Node();
-        ~Node();
+        Node() : count(0), isEndOfWord(false){}
+        ~Node(){
+            for(auto& p: children)
+                delete p.second;
+        };
     };
 
-    Node root;
+    Node* root;
     unordered_set<char> ignoredCharacters;   // Set of characters that will be ingored eg. ignore '-':  "sub-tree" => "subtree" 
     unordered_set<char> delimiters;    // Set of characters that seperate words
     double anomalyRate;  // The appearance rate of one word below this rate => anomaly
