@@ -43,6 +43,7 @@ class StatTrie {
     
     void setIgnoredCharacters (const char* delim);
     void setDelimiters (const char* delim);
+    //Node* getRoot();
     void insert (string text);
     bool insertFromFile (string filepath);  // Insert data from another file (no overwriting)
     bool loadFromFile (string filepath);    // Load data from another file (overwrite)

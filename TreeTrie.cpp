@@ -41,5 +41,66 @@ StatTrie::~StatTrie(){
     delete root;
 }
 
+void StatTrie::setIgnoredCharacters(const char* delim){
+        for (int i = 0; delim[i] != '\0'; ++i)
+        ignoredCharacters.insert(delim[i]);
+}
 
+void StatTrie::setDelimiters(const char* delim){
+    for (int i = 0; delim[i] != '\0'; ++i)
+        delimiters.insert(delim[i]);
+}
+
+void StatTrie::insert(string text){
+    string word = "";
+
+    for(char c : text){
+        if(ignoredCharacters.find(c) != ignoredCharacters.end()) continue;
+
+        if(delimiters.find(c) != delimiters.end()){
+            if(!word.empty()){
+                Node* cur = root;
+
+                for(char ch : word){
+                    if(cur->children.find(ch) == cur->children.end()){
+                        cur->children[ch] = new Node();
+                        totalNodes++;
+                    }
+
+                    cur = cur->children[ch];
+                    cur->count++;
+                }
+
+                cur->isEndOfWord = true;
+                totalWords++;
+                totalUniqueWords++;
+                totalChar += word.size();
+
+                word.clear();
+            }
+        }else{
+            word += c;
+        }
+    }
+
+    if(!word.empty()){
+        Node* cur = root;
+        for(char ch : word){
+            if(cur->children.find(ch) == cur->children.end()){
+                cur->children[ch] = new Node();
+                totalNodes++;
+            }
+
+            cur = cur->children[ch];
+            cur->count++;
+
+        }
+
+        cur->isEndOfWord = true;
+        totalWords++;
+        totalUniqueWords++;
+        totalChar += word.size();
+    }
+
+}
 
