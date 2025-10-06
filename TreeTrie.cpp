@@ -120,3 +120,66 @@ bool StatTrie::insertFromFile(string filepath){
     file.close();
     return true;
 }
+
+bool StatTrie::loadFromFile(string filepath){
+    delete root;
+    root = new Node();
+    
+    totalNodes = 1;       
+    totalWords = 0;
+    totalUniqueWords = 0;
+    totalChar = 0;
+
+    return insertFromFile(filepath);
+}
+
+bool StatTrie::contains(string word) const {
+    Node* cur = root;
+
+    for (char c : word) {
+        auto it = cur->children.find(c);
+        if (it == cur->children.end()) {
+            return false;
+        }
+        cur = it->second;
+    }
+    return cur->isEndOfWord;
+}
+
+bool StatTrie::startWith(string prefix) const {
+    Node* cur = root;
+
+    for (char c : prefix) {
+        auto it = cur->children.find(c);
+        if (it == cur->children.end()) {
+            return false;
+        }
+        cur = it->second;
+    }
+    return true;
+}
+
+void StatTrie::remove(string word){
+    
+}
+
+
+unsigned int StatTrie::countNodes() const{
+    return totalNodes;
+}
+
+unsigned int StatTrie::countCharacters() const{
+    return totalChar;
+}
+
+unsigned int StatTrie::countWords() const{
+    return totalWords;
+}
+
+unsigned int StatTrie::countUniqueWords() const{
+    return totalUniqueWords;
+}
+
+
+
+
